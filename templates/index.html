@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SONORA — Music Downloader</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/main.css">
+</head>
+<body>
+<div class="app-shell">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"/>
+          <path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5"/>
+          <circle cx="12" cy="12" r="2"/>
+          <path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"/>
+          <path d="M19.1 4.9C23 8.8 23 15.1 19.1 19"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <div class="brand-title">
+          SONORA
+        </div>
+        <div class="brand-sub">Music Downloader</div>
+      </div>
+    </div>
+
+    <div class="nav-heading">WORKSPACE</div>
+    <nav class="nav">
+      <a href="#" data-view="downloader" class="nav-item active">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        <span>Downloader</span>
+      </a>
+      <a href="#" data-view="settings" class="nav-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="4" y="4" width="16" height="16" rx="2" ry="2"/>
+          <rect x="9" y="9" width="6" height="6"/>
+          <line x1="9" y1="1" x2="9" y2="4"/>
+          <line x1="15" y1="1" x2="15" y2="4"/>
+          <line x1="9" y1="20" x2="9" y2="23"/>
+          <line x1="15" y1="20" x2="15" y2="23"/>
+          <line x1="20" y1="9" x2="23" y2="9"/>
+          <line x1="20" y1="14" x2="23" y2="14"/>
+          <line x1="1" y1="9" x2="4" y2="9"/>
+          <line x1="1" y1="14" x2="4" y2="14"/>
+        </svg>
+        <span>Storage & Lyrics</span>
+      </a>
+      <a href="#" data-view="downloads" class="nav-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+        <span>Downloads</span>
+      </a>
+      <a href="#" data-view="library" class="nav-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 18V5l12-2v13"/>
+          <circle cx="6" cy="18" r="3"/>
+          <circle cx="18" cy="16" r="3"/>
+        </svg>
+        <span>My Library</span>
+      </a>
+    </nav>
+  </aside>
+
+  <!-- MAIN WORKSPACE -->
+  <main class="main-workspace">
+    
+    <!-- Header -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <h1 class="topbar-title" id="pageTitle">Downloader</h1>
+        <p class="topbar-subtitle">Resolve Spotify playlists and save music to your local library</p>
+      </div>
+      <div class="topbar-right">
+        <div class="status-chip">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+          </svg>
+          <span class="chip-label">Directory:</span>
+          <span class="chip-value" id="chipDir">Not selected</span>
+        </div>
+        <div class="status-chip">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+          </svg>
+          <span class="chip-label">Status:</span>
+          <span class="chip-value green" id="chipSpeed">Idle</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Viewport -->
+    <div class="viewport">
+      
+      <!-- DOWNLOADER VIEW -->
+      <section class="view active" id="view-downloader">
+        
+        <!-- Ingestion Card -->
+        <div class="card ingestion-card">
+          <div class="ingestion-top">
+            <div class="ingestion-heading">
+              <div class="ingestion-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                </svg>
+              </div>
+              <div class="ingestion-copy">
+                <div class="ingestion-kicker">START WITH A LINK</div>
+                <h2 class="ingestion-title">Spotify playlist, album or track</h2>
+              </div>
+            </div>
+            <div class="ingestion-route">SPOTIFY <span>→</span> YOUR LIBRARY</div>
+          </div>
+          <p class="ingestion-sub">Paste a Spotify link to preview its tracks, then choose which ones to download.</p>
+          <div class="ingestion-bottom">
+            <div class="input-wrap">
+              <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              </svg>
+              <input id="urlInput" type="text" placeholder="https://open.spotify.com/playlist/37i9dQZF1DXcBWIGoYBM5M">
+              <button class="paste-sample" id="sampleBtn">Use example</button>
+            </div>
+            <button class="btn-analyze" id="analyzeBtn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/>
+              </svg>
+              PREVIEW TRACKS
+            </button>
+          </div>
+          <div class="ingestion-footnote"><span></span>Your next download starts here.</div>
+        </div>
+
+        <!-- Status Cards -->
+        <div class="status-grid">
+          <div class="status-card">
+            <div class="status-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 18V5l12-2v13"/>
+                <circle cx="6" cy="18" r="3"/>
+                <circle cx="18" cy="16" r="3"/>
+              </svg>
+            </div>
+            <div class="status-info">
+              <div class="status-label">AUDIO FORMAT</div>
+              <div class="status-value">spotDL configured output</div>
+            </div>
+          </div>
+          
+          <div class="status-card">
+            <div class="status-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+                <polyline points="10 9 9 9 8 9"/>
+              </svg>
+            </div>
+            <div class="status-info">
+              <div class="status-label">LYRICS</div>
+              <div class="status-value">Optional .LRC files</div>
+            </div>
+          </div>
+
+          <div class="status-card">
+            <div class="status-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <path d="M9 12l2 2 4-4"/>
+              </svg>
+            </div>
+            <div class="status-info">
+              <div class="status-label">SUPPORTED LINKS</div>
+              <div class="status-value">Playlists, albums, tracks</div>
+            </div>
+          </div>
+
+          <div class="status-card">
+            <div class="status-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+              </svg>
+            </div>
+            <div class="status-info">
+              <div class="status-label">TARGET DIRECTORY</div>
+              <div class="status-value truncate" id="statDir">Not selected</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Results (Hidden until analyze) -->
+        <div id="analysisResult"></div>
+
+        <!-- Recent Activity Panel -->
+        <div class="card activity-card" id="activityCard">
+          <div class="card-header">
+            <div class="card-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+              RECENT ACTIVITY
+            </div>
+            <div class="card-meta">History</div>
+          </div>
+          <div class="activity-body" id="activityBody">
+            <div class="activity-empty">Your recent download tasks will appear here.</div>
+          </div>
+        </div>
+
+        <!-- Terminal Panel -->
+        <div class="card terminal-card">
+          <div class="card-header">
+            <div class="card-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="4 17 10 11 4 5"/>
+                <line x1="12" y1="19" x2="20" y2="19"/>
+              </svg>
+              System Log Stream
+              <span class="log-count" id="logCount">0 entries</span>
+            </div>
+            <button class="btn-clear" id="clearTerminalBtn">Clear Logs</button>
+          </div>
+          <div class="terminal-body" id="terminalOutput"></div>
+        </div>
+
+      </section>
+
+      <!-- OTHER VIEWS (Settings, Downloads, Library) -->
+      <section class="view" id="view-settings">
+        <div class="card page-card">
+          <div class="page-card-header">
+            <div>
+              <div class="page-kicker">PREFERENCES</div>
+              <h2>Storage &amp; Lyrics</h2>
+              <p>Choose where music and optional lyrics are saved.</p>
+            </div>
+          </div>
+          
+          <div class="settings-grid">
+            <div class="setting-row">
+              <div class="setting-copy">
+                <h3>Music download location</h3>
+                <p>Downloaded audio files will be saved here.</p>
+              </div>
+              <div class="setting-control">
+                <div class="path-display" id="musicDirDisplay">Not selected</div>
+                <button class="btn-secondary" id="pickMusicBtn">Browse</button>
+              </div>
+            </div>
+
+            <div class="setting-row">
+              <div class="setting-copy">
+                <h3>Lyrics storage location</h3>
+                <p>Optional synced lyrics are stored separately.</p>
+              </div>
+              <div class="setting-control">
+                <div class="path-display" id="lyricsDirDisplay">Not selected</div>
+                <button class="btn-secondary" id="pickLyricsBtn">Browse</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="view-downloads">
+        <div class="card page-card">
+          <div class="page-card-header">
+            <div>
+              <div class="page-kicker">YOUR QUEUE</div>
+              <h2>Downloads</h2>
+              <p>Monitor current and recent download tasks.</p>
+            </div>
+          </div>
+          <div id="downloadsList"></div>
+        </div>
+      </section>
+
+      <section class="view" id="view-library">
+        <div class="card page-card">
+          <div class="page-card-header library-header">
+            <div>
+              <div class="page-kicker">ON THIS DEVICE</div>
+              <h2>My Library</h2>
+              <p>Browse your downloaded music and lyrics.</p>
+            </div>
+            <div class="library-tools">
+              <label class="sr-only" for="libSearch">Search your library</label>
+              <input id="libSearch" type="search" placeholder="Search your library">
+              <button id="libRefresh" class="btn-secondary">Refresh</button>
+            </div>
+          </div>
+          <div id="libraryList"></div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+<script src="/static/js/app.js"></script>
+</body>
+</html>

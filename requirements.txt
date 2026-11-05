@@ -1,0 +1,5 @@
+Flask>=3.0
+spotdl>=4.5
+mutagen>=1.47
+python-dotenv>=1.0
+requests>=2.31
