@@ -10,6 +10,8 @@ from spotdl import Spotdl
 from spotdl.utils.search import get_simple_songs
 from spotdl.types.song import Song
 
+from backend.lyrics_service import fetch_lyrics
+
 logger = logging.getLogger(__name__)
 
 class SpotifyServiceError(Exception):
@@ -52,6 +54,14 @@ class SpotifyService:
         if not songs:
             raise SpotifyServiceError("No tracks found for the provided URL.")
 
+        def ensure_lyrics(song):
+            if not getattr(song, "lyrics", None):
+                song.lyrics = fetch_lyrics(song)
+            return bool(song.lyrics)
+
+        with ThreadPoolExecutor(max_workers=min(5, len(songs))) as executor:
+            lyrics_available = list(executor.map(ensure_lyrics, songs))
+
         self._cache_songs(songs)
         tracks = [{
             "song_id": s.song_id, "name": s.name, "artist": s.artist,
@@ -59,7 +69,8 @@ class SpotifyService:
             "album_artist": s.album_artist, "duration": s.duration,
             "cover_url": s.cover_url, "year": s.year,
             "track_number": s.track_number, "url": s.url,
-        } for s in songs]
+            "has_lyrics": has_lyrics,
+        } for s, has_lyrics in zip(songs, lyrics_available)]
         
         first = songs[0]
         return {

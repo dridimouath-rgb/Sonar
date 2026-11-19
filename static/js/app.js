@@ -139,7 +139,10 @@ function renderAnalysis(data) {
               <input type="checkbox" class="track-check" data-url="${t.url}" checked>
               <img class="track-cover" src="${t.cover_url || ''}" alt="">
               <div class="track-info">
-                <div class="track-title">${escapeHtml(t.name)}</div>
+                <div class="track-title">
+                  ${t.has_lyrics ? '<span class="lyrics-badge" title="Lyrics found" aria-label="Lyrics found">E</span>' : ""}
+                  <span class="track-name">${escapeHtml(t.name)}</span>
+                </div>
                 <div class="track-artist">${escapeHtml(t.artist)}</div>
               </div>
               <div class="track-status">Ready</div>

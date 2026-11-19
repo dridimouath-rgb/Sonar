@@ -147,9 +147,24 @@ class DownloadServiceTests(unittest.TestCase):
             lyrics=None,
         )
         with tempfile.TemporaryDirectory() as lyrics_dir:
-            _save_lyrics(song, lyrics_dir, "task-id")
+            with patch("backend.download_service.fetch_lyrics", return_value=None):
+                _save_lyrics(song, lyrics_dir, "task-id")
 
             self.assertEqual(list(Path(lyrics_dir).iterdir()), [])
+
+    def test_fetched_lyrics_are_saved_by_track_title(self):
+        song = SimpleNamespace(
+            name="Track",
+            artist="Artist",
+            lyrics=None,
+        )
+        lyrics = "[00:01.00]Hello"
+        with tempfile.TemporaryDirectory() as lyrics_dir:
+            with patch("backend.download_service.fetch_lyrics", return_value=lyrics):
+                _save_lyrics(song, lyrics_dir, "task-id")
+
+            path = Path(lyrics_dir) / "Track.lrc"
+            self.assertEqual(path.read_text(encoding="utf-8"), lyrics)
 
     def test_available_lyrics_are_saved_by_track_title(self):
         song = SimpleNamespace(

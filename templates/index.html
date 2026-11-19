@@ -222,22 +222,6 @@
           </div>
         </div>
 
-        <!-- Terminal Panel -->
-        <div class="card terminal-card">
-          <div class="card-header">
-            <div class="card-title">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="4 17 10 11 4 5"/>
-                <line x1="12" y1="19" x2="20" y2="19"/>
-              </svg>
-              System Log Stream
-              <span class="log-count" id="logCount">0 entries</span>
-            </div>
-            <button class="btn-clear" id="clearTerminalBtn">Clear Logs</button>
-          </div>
-          <div class="terminal-body" id="terminalOutput"></div>
-        </div>
-
       </section>
 
       <!-- OTHER VIEWS (Settings, Downloads, Library) -->
@@ -287,6 +271,20 @@
             </div>
           </div>
           <div id="downloadsList"></div>
+        </div>
+        <div class="card terminal-card">
+          <div class="card-header">
+            <div class="card-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="4 17 10 11 4 5"/>
+                <line x1="12" y1="19" x2="20" y2="19"/>
+              </svg>
+              System Log Stream
+              <span class="log-count" id="logCount">0 entries</span>
+            </div>
+            <button class="btn-clear" id="clearTerminalBtn">Clear Logs</button>
+          </div>
+          <div class="terminal-body" id="terminalOutput" aria-live="polite"></div>
         </div>
       </section>
 

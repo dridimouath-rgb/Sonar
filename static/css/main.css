@@ -598,7 +598,9 @@ body {
 
 .track-cover { width: 36px; height: 36px; border-radius: 6px; object-fit: cover; border: 1px solid var(--border); }
 .track-info { min-width: 0; }
-.track-title { font-size: 13px; font-weight: 600; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.track-title { display: flex; align-items: center; gap: 6px; min-width: 0; font-size: 13px; font-weight: 600; color: var(--text-main); }
+.track-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lyrics-badge { flex: 0 0 auto; padding: 1px 4px; border: 1px solid var(--green-border); border-radius: 3px; background: var(--green-bg); color: var(--green); font: 600 9px/1.2 'JetBrains Mono', monospace; }
 .track-artist { font-size: 11px; color: var(--text-muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .track-dur { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-dark); text-align: right; }
 .track-status { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dark); }

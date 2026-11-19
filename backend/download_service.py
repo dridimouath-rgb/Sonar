@@ -7,6 +7,7 @@ from pathlib import Path
 
 from backend.task_manager import manager
 from backend.directory_service import get_setting
+from backend.lyrics_service import fetch_lyrics
 from backend.spotify_service import SpotifyService
 
 logger = logging.getLogger(__name__)
@@ -161,10 +162,10 @@ def run_download(task_id, urls):
 
 def _save_lyrics(song, lyrics_dir, task_id):
     try:
-        lyrics = song.lyrics
+        lyrics = getattr(song, "lyrics", None) or fetch_lyrics(song)
         if not lyrics:
             logger.info(
-                "[task %s] No lyrics available for %s - %s; skipping lyrics file.",
+                "[task %s] No lyrics found for %s - %s; skipping lyrics file.",
                 task_id, song.artist, song.name,
             )
             return
