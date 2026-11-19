@@ -71,5 +71,5 @@ the public internet is not a supported deployment setup.
 
 Use the application and its dependencies only in compliance with applicable
 copyright law and the terms of the services and content providers you use.
-SONORA does not provide Spotify-native lyrics access; it saves lyric text only
-when it is already present on a track object.
+SONORA fetches lyrics from LRCLIB, saving synced lyrics when available and plain
+text otherwise. Some tracks, such as remixes, may not be found.
