@@ -1,75 +1,86 @@
-# SONORA
+<div align="center">
 
-SONORA is a local web interface for previewing Spotify playlists and downloading
-selected tracks to folders on your computer. The Flask server and browser are
-intended to run on the same machine; the application uses a native folder picker
-to choose music and optional lyrics directories.
+# 🎧 SONORA
 
-## Requirements
+**Turn Spotify links into a music library you own.**
+Preview playlists, albums and tracks, pick what you want, and save it to your own computer.
 
-- Python 3.10 or newer
-- FFmpeg available on your `PATH` (required by spotDL for audio conversion)
-- Tkinter for the native folder picker (on Debian/Ubuntu, install `python3-tk`)
+![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
+![Flask](https://img.shields.io/badge/Flask-local%20app-000000?logo=flask&logoColor=white)
+![spotDL](https://img.shields.io/badge/powered%20by-spotDL-1DB954)
+![License](https://img.shields.io/badge/license-MIT-green)
 
-## Install
+<img src="docs/screenshots/downloader.png" alt="SONORA downloader" width="100%">
+
+</div>
+
+## ✨ Features
+
+- 🔗 **Paste and preview**: drop in a Spotify playlist, album or track link and see its tracks first
+- ✅ **Download only what you want**: select individual tracks before starting
+- 📁 **Your folders, your rules**: pick music and lyrics locations with a native folder picker
+- 📝 **Optional `.LRC` lyrics**: saved separately when lyrics are available on the track
+- 📊 **Live download queue** with a built-in system log stream
+- 🎵 **Built-in library browser** with search for everything you have downloaded
+- 🔒 **100% local**: no accounts, no cloud, everything stays on your machine
+
+## 🖼️ Screenshots
+
+| 📥 Downloader | ⚙️ Storage & Lyrics |
+|:---:|:---:|
+| <img src="docs/screenshots/downloader.png" alt="Downloader"> | <img src="docs/screenshots/storage.png" alt="Storage and Lyrics"> |
+| **⏬ Downloads** | **🎵 My Library** |
+| <img src="docs/screenshots/downloads.png" alt="Downloads"> | <img src="docs/screenshots/library.png" alt="My Library"> |
+
+## 📦 Requirements
+
+- 🐍 Python 3.10+
+- 🎬 [FFmpeg](https://ffmpeg.org/) on your `PATH`
+- 🖱️ Tkinter for the folder picker (Debian/Ubuntu: `sudo apt install python3-tk`)
+
+## 🚀 Setup
 
 ```bash
-git clone https://github.com/<YOUR-USERNAME>/SONORA.git
-cd SONORA
+git clone https://github.com/dridimouath-rgb/Sonar.git
+cd Sonar
 python -m venv .venv
-```
 
-Activate the virtual environment:
-
-```bash
-# Linux or macOS
+# Linux / macOS
 source .venv/bin/activate
-
-# Windows PowerShell
+# Windows (PowerShell)
 .venv\Scripts\Activate.ps1
-```
 
-Install Python dependencies and configure the Flask secret:
-
-```bash
-python -m pip install -r requirements.txt
+pip install -r requirements.txt
 cp .env.example .env
 ```
 
-Set `FLASK_SECRET_KEY` in `.env` to a private random value. Generate one with:
-
-```bash
-python -c "import secrets; print(secrets.token_hex(32))"
-```
-
-Keep `.env` private; it is excluded from Git.
-
-## Run
+## ▶️ Usage
 
 ```bash
 python app.py
 ```
 
-Open <http://127.0.0.1:5000> in a browser on the same computer. Choose your
-music and optional lyrics folders in **Storage & Lyrics**, preview a Spotify
-link, select tracks, and start a download.
+Then open <http://127.0.0.1:5000> and:
 
-SONORA stores settings and task state locally under `instance/` and writes its
-application log under `logs/`; these runtime files are not included in Git.
+1. 📁 Choose your music (and optional lyrics) folders in **Storage & Lyrics**
+2. 🔗 Paste a Spotify link in **Downloader** and click **Preview Tracks**
+3. ✅ Select the tracks you want and start the download
+4. 🎶 Find them later in **My Library**
 
-## Tests
+Settings and task state are saved in `instance/`, and logs in `logs/` (both git-ignored).
+
+## 🧪 Tests
 
 ```bash
 python -m unittest discover -s tests -v
 ```
 
-## Important
+## ⚠️ Notes
 
-SONORA is a local application, not a hosted public website. Its directory picker
-selects folders on the computer running the server, so exposing this server to
-the public internet is not a supported deployment setup.
+- 🏠 Local use only. Exposing the server to the public internet is not supported.
+- ⚖️ Use SONORA in compliance with copyright law and the terms of the services you use.
+- 📝 Lyrics are saved only when already present on a track object. SONORA has no Spotify lyrics access.
 
-Use the application and its dependencies only in compliance with applicable
-copyright law and the terms of the services and content providers you use.
-SONORA fetches lyrics from LRCLIB, saving synced lyrics when available and plain
-text otherwise. Some tracks, such as remixes, may not be found.
+## 📄 License
+
+Released under the [MIT License](LICENSE).
